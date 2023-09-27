@@ -1,0 +1,12 @@
+resources:
+  - deployment.yaml
+  - namespace.yaml
+  - service.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: index-html
+    files:
+      - index-html
