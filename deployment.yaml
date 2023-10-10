@@ -33,7 +33,7 @@ spec:
       volumes:
         - name: index-html
           configMap:
-            name: index-html
+            name: index_html
             items:
               - key: index-html
                 path: index.html
