@@ -9,6 +9,9 @@ Dependencies:
 * kubectl
 * terminal
 
+Visibility into the cluster can be done with kubectl only,
+but a tool like [k9s](https://k9scli.io/topics/install/) is very nice
+
 ```
 cd /tmp/; git clone https://github.com/jdautomate/interview-web-app.git
 cd interview-web-app
