@@ -16,18 +16,24 @@ Visibility into the cluster can be done with kubectl only,
 but a tool like [k9s](https://k9scli.io/topics/install/) is very nice to have
 
 ```
+kind create cluster
 cd /tmp/; git clone https://github.com/jdautomate/interview-web-app.git
 cd interview-web-app/kustomize
-kind create cluster
 kubectl apply -k .
 ```
 
 Helm Option
 ===========
 
+Dependencies:
+* kind
+* kubectl
+* helm
+* terminal
+
 ```
+kind create cluster
 cd /tmp/; git clone https://github.com/jdautomate/interview-web-app.git
 cd interview-web-app
-kind create cluster
 helm install web-app helm/
 ```
