@@ -23,5 +23,5 @@ data:
 kind: ConfigMap
 metadata:
   name: index-html
-  namespace: nginx
+  namespace: temptest
 

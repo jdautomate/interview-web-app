@@ -1,0 +1,43 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: temptest
+  namespace: temptest
+  labels:
+    app: nginx
+    release: kube-prometheus-stack
+    task_group: servicemonitor
+spec:
+  namespaceSelector:
+    matchNames:
+    - temptest
+  selector:
+    matchLabels:
+      app: nginx
+  endpoints:
+  - interval: 10s
+    port: metrics
+    path: /metrics
+    scheme: http
+    relabelings:
+    - sourceLabels: [__meta_kubernetes_namespace_label_task_group]
+      separator: ;
+      action: replace
+      targetLabel: task_group
+      regex: ^(.*)$
+      replacement: monitoring
+    - sourceLabels: [__meta_kubernetes_deployment_label_task_group]
+      separator: ;
+      action: replace
+      targetLabel: task_group
+      regex: ^(.*)$
+      replacement: monitoring
+    - sourceLabels: [__meta_kubernetes_pod_label_task_group]
+      separator: ;
+      action: replace
+      targetLabel: task_group
+      regex: ^(.*)$
+      replacement: monitoring
+
+

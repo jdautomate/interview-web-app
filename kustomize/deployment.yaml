@@ -2,9 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
-  namespace: nginx
+  namespace: temptest
   labels:
     app: nginx
+    task-group: deployment
 spec:
   replicas: 1
   selector:
@@ -14,15 +15,29 @@ spec:
     metadata:
       labels:
         app: nginx
+        task_group: pod
     spec:
       containers:
         - name: nginx
-          image: nginx
+          image: 817264447024.dkr.ecr.us-west-1.amazonaws.com/www-crawler:latest
+          command: ["/usr/local/sbin/init.sh"]
           ports:
           - containerPort: 80
+          - name: nginx-metrics
+            containerPort: 9113
+            protocol: TCP
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 6
+            successThreshold: 1
+            tcpSocket:
+              port: 9113
           volumeMounts:
             - name: index-html
-              mountPath: "/usr/share/nginx/html"
+              mountPath: "/var/www/html"
+            - name: default-conf
+              mountPath: "/etc/nginx/sites-enabled"
           resources:
             requests:
               memory: "100Mi"
@@ -33,8 +48,14 @@ spec:
       volumes:
         - name: index-html
           configMap:
-            name: index_html
+            name: index-html
             items:
               - key: index-html
                 path: index.html
+        - name: default-conf
+          configMap:
+            name: default-conf
+            items:
+              - key: nginx
+                path: default.conf
       
