@@ -13,11 +13,11 @@ spec:
       annotations:
         description: Pod {{ $labels.namespace }}/{{ $labels.pod }} has been in a non-ready state for longer than 15 minutes..
         summary: Not ready
-      expr: up{namespace="temptest"} == 0
+      expr: (kube_statefulset_status_replicas_ready{job="kube-state-metrics",namespace="monitoring",statefulset="alertmanager-kube-prometheus-stack-alertmanager"}) == 1
       for: 30s
       labels:
         severity: warning
-        task_group: '{{ with printf `kube_namespace_labels{namespace="%s"}` .Labels.namespace | query }}{{ with (. | first).Labels.label_task_group }}{{ . }}{{end}}{{end}}'
+        task_group: "{{ with printf `kube_statefulset_labels{namespace='%s',statefulset='%s'}` .Labels.namespace .Labels.statefulset | query }}{{ with (. | first).Labels.label_task_group }}{{ . }}{{end}}{{end}}"
 
 ## kube_namespace_labels * on (namespace) group_right (label_task_group) ##
 ## working query ##

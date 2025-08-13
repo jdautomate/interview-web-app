@@ -5,7 +5,7 @@ metadata:
   namespace: temptest
   labels:
     app: nginx
-    task-group: deployment
+    task_group: deployment
 spec:
   replicas: 1
   selector:

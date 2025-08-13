@@ -6,6 +6,8 @@ metadata:
   labels:
     app: nginx
     task-group: service
+    created-by: helm_ops-saas-k8s-control_temptest
+    maintainer: justin.leber
 spec:
   selector:
     app: nginx
