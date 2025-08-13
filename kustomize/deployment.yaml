@@ -19,23 +19,13 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: 817264447024.dkr.ecr.us-west-1.amazonaws.com/www-crawler:latest
-          command: ["/usr/local/sbin/init.sh"]
+          image: nginx:bookworm
+          # command: [""]
           ports:
           - containerPort: 80
-          - name: nginx-metrics
-            containerPort: 9113
-            protocol: TCP
-          readinessProbe:
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 6
-            successThreshold: 1
-            tcpSocket:
-              port: 9113
           volumeMounts:
             - name: index-html
-              mountPath: "/var/www/html"
+              mountPath: "/usr/share/nginx/html"
             - name: default-conf
               mountPath: "/etc/nginx/sites-enabled"
           resources:
